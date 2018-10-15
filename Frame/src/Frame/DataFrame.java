@@ -45,12 +45,12 @@ public class DataFrame implements Cloneable {
             String typ;
             String nazwa;
             for (int i = 0; i< cols.length; i++){
-                typ = ListaKolumn.get(i).getType();
-                nazwa = ListaKolumn.get(i).getName();
+                typ = get(cols[i]).getType();
+                nazwa = get(cols[i]).getName();
 
                 Nowe.add(new Kolumna(nazwa,typ));
-                for(int j=0; j< ListaKolumn.size(); j++){
-                    Nowe.get(i).getLista().add(this.get(nazwa).getLista().get(j));
+                for(int j=0; j< size(); j++){
+                    Nowe.get(i).getLista().add(get(nazwa).getLista().get(j));
                 }
 
             }
@@ -64,7 +64,7 @@ public class DataFrame implements Cloneable {
 
         DataFrame Nowa = makeBase();
 
-        for(int j =0 ;j <ListaKolumn.size(); i++){
+        for(int j =0 ;j <ListaKolumn.size(); j++){
            Kolumna kol =  ListaKolumn.get(j);
          Nowa.ListaKolumn.get(j).getLista().add(kol.getLista().get(i));
         }
