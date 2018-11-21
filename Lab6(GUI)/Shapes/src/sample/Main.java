@@ -25,9 +25,9 @@ public class Main{
             }
         });
         MyPanel panel = new MyPanel();
-        panel.shapes.add(new Circle(100,"loko"));
-        panel.shapes.add(new Triangle(50,"loko2"));
-        panel.shapes.add(new Square(70,"rect"));
+        panel.shapes.add(new Circle(100,"loko",0,0));
+        panel.shapes.add(new Triangle(20,"loko2",100, 100));
+        panel.shapes.add(new Square(70,"rect",500,200));
         f.setContentPane(panel);
         f.setSize(800,375);
         f.setVisible(true);
