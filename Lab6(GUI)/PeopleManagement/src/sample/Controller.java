@@ -3,6 +3,7 @@ package sample;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.SetChangeListener;
 import javafx.fxml.FXML;
@@ -20,6 +21,8 @@ import javax.imageio.ImageIO;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Controller {
@@ -74,11 +77,33 @@ public class Controller {
     @FXML
     private Pane window;
 
+
+    private boolean editing = false;
     private SpinnerValueFactory<Integer> ageSpinValue = new SpinnerValueFactory.IntegerSpinnerValueFactory(16,100, 18);
     private SpinnerValueFactory<Double> salarySpinValue = new SpinnerValueFactory.DoubleSpinnerValueFactory(0,50000,1800);
     private Image img;
     private ObservableList<Pracownik> employerList = FXCollections.observableArrayList();
     private Integer indexToRmove;
+    private ChangeListener<Pracownik> oznaczono = new ChangeListener<Pracownik>(){
+            public void changed(ObservableValue<? extends Pracownik> ov,
+                Pracownik old_val, Pracownik new_val) {
+                if(valueList.getItems().size() != 0) {
+                    imageViewer.setImage(new_val.getImg());
+                    name.setText(new_val.getName());
+                    surname.setText(new_val.getSurname());
+                    town.setText(new_val.getTown());
+                    street.setText(new_val.getSurname());
+                    number.setText(new_val.getPhoneNumber());
+                    age.getValueFactory().setValue(new_val.getAge());
+                    salary.getValueFactory().setValue(new_val.getSalary());
+                    deleteButton.setDisable(false);
+                    indexToRmove = employerList.indexOf(new_val);
+                    addButton.setText("Edit");
+                    editing= true;
+
+                }
+    }
+    };
 
     @FXML
     public void initialize() {
@@ -96,21 +121,8 @@ public class Controller {
                 }
             }
      });
-        valueList.getSelectionModel().selectedItemProperty().addListener( new ChangeListener<Pracownik>() {
-            public void changed(ObservableValue<? extends Pracownik> ov,
-                                Pracownik old_val, Pracownik new_val) {
-                imageViewer.setImage(new_val.getImg());
-                name.setText(new_val.getName());
-                surname.setText(new_val.getSurname());
-                town.setText(new_val.getTown());
-                street.setText(new_val.getSurname());
-                number.setText(new_val.getPhoneNumber());
-                age.getValueFactory().setValue(new_val.getAge());
-                salary.getValueFactory().setValue(new_val.getSalary());
-                deleteButton.setDisable(false);
-                indexToRmove = employerList.indexOf(new_val);
-            }
-        });
+
+        valueList.getSelectionModel().selectedItemProperty().addListener(oznaczono);
 
     }
 
@@ -133,19 +145,31 @@ public class Controller {
         fileChooser.setTitle("Select Image File");
         fileChooser.getExtensionFilters().add(extFilter);
         File pathFile = fileChooser.showOpenDialog(null);
-        img = new Image(pathFile.toURI().toString());
-        imageViewer.setImage(img);
-        imageViewer.setPreserveRatio(false);
-        imageViewer.setFitHeight(imageWindow.getHeight());
-        imageViewer.setFitWidth(imageWindow.getWidth());
-        imageViewer.setSmooth(true);
-        imageViewer.setCache(true);
+        if(pathFile == null){
+            img = null;
+        } else {
+            img = new Image(pathFile.toURI().toString());
+            imageViewer.setImage(img);
+            imageViewer.setPreserveRatio(false);
+            imageViewer.setFitHeight(imageWindow.getHeight());
+            imageViewer.setFitWidth(imageWindow.getWidth());
+            imageViewer.setSmooth(true);
+            imageViewer.setCache(true);
+        }
     }
 
     @FXML
     public void addPerson(){
-        Pracownik toAdd = new Pracownik(img,name.getText(),surname.getText(),town.getText(),street.getText(),number.getText(),age.getValue(),salary.getValue());
-        employerList.add(toAdd);
+        Pracownik toAdd = new Pracownik(img, name.getText(), surname.getText(), town.getText(), street.getText(), number.getText(), age.getValue(), salary.getValue());
+        if(!editing) {
+            employerList.add(toAdd);
+        } else{
+            int toEditIndex = valueList.getSelectionModel().getSelectedIndex();
+            removePerson();
+            employerList.add(toEditIndex,toAdd);
+             editing = false;
+        }
+
         imageViewer.setImage(null);
         name.setText("");
         surname.setText("");
@@ -154,23 +178,24 @@ public class Controller {
         number.setText("");
         age.getValueFactory().setValue(18);
         salary.getValueFactory().setValue(1800.00);
-
+        addButton.setDisable(true);
     }
 
     @FXML
     public void removePerson(){
-        valueList.getItems().remove(indexToRmove);
-        employerList.remove(indexToRmove);
-        valueList.getSelectionModel().clearSelection();
-        valueList.refresh();
-        imageViewer.setImage(null);
-        name.setText("");
-        surname.setText("");
-        town.setText("");
-        street.setText("");
-        number.setText("");
-        age.getValueFactory().setValue(18);
-        salary.getValueFactory().setValue(1800.00);
+        Pracownik to_Remoove = valueList.getSelectionModel().getSelectedItem();
+        valueList.getItems().remove(to_Remoove);
+        employerList.remove(to_Remoove);
+            imageViewer.setImage(null);
+            name.setText("");
+            surname.setText("");
+            town.setText("");
+            street.setText("");
+            number.setText("");
+            age.getValueFactory().setValue(18);
+            salary.getValueFactory().setValue(1800.00);
+            addButton.setText("Add");
+        name.requestFocus();
         deleteButton.setDisable(true);
     }
 
