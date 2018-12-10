@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <Pane fx:id="window" prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <TextField fx:id="folderPath" editable="false" layoutX="74.0" layoutY="63.0" onKeyTyped="#checkForText" prefHeight="25.0" prefWidth="295.0" promptText="Folder with photos to sort" />
+            <Button fx:id="folderButton" layoutX="377.0" layoutY="63.0" mnemonicParsing="false" onMouseClicked="#folderButtonPressed" prefHeight="25.0" prefWidth="30.0" text="..." />
+            <TextField fx:id="apiKey" layoutX="471.0" layoutY="63.0" onKeyTyped="#checkForText" prefHeight="25.0" prefWidth="227.0" promptText="Your Indico API key" />
+            <Button fx:id="sortButton" disable="true" layoutX="726.0" layoutY="63.0" mnemonicParsing="false" onMouseClicked="#sortPressed" prefHeight="25.0" prefWidth="73.0" text="Sort" />
+            <TreeView fx:id="folderView" layoutX="74.0" layoutY="159.0" prefHeight="486.0" prefWidth="200.0" />
+            <Pane fx:id="pictureWindow" layoutX="307.0" layoutY="159.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: WHITE; -fx-border-color: gainsboro;">
+               <children>
+                  <ImageView fx:id="pictureView" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+   </children>
+</GridPane>

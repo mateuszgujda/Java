@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="sample.Controller">
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+   </rowConstraints>
+   <children>
+      <Pane fx:id="window" prefHeight="781.0" prefWidth="952.0">
+         <children>
+            <Spinner fx:id="degreeSpinner" editable="true" layoutX="167.0" layoutY="30.0" prefHeight="25.0" prefWidth="74.0" />
+            <Text layoutX="43.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stopień wielomianu:" wrappingWidth="113.13671875" />
+            <ScrollPane fx:id="scrollPanel" hbarPolicy="NEVER" layoutX="43.0" layoutY="99.0" prefHeight="493.0" prefWidth="200.0">
+               <content>
+                  <VBox fx:id="pointsBox" alignment="TOP_CENTER" prefHeight="490.0" prefWidth="200.0" />
+               </content>
+            </ScrollPane>
+            <LineChart fx:id="chart" layoutX="280.0" layoutY="27.0" prefHeight="574.0" prefWidth="643.0">
+              <xAxis>
+                <CategoryAxis animated="false" startMargin="0.0" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+            </LineChart>
+            <Spinner fx:id="toSpinner" editable="true" layoutX="156.0" layoutY="663.0" prefHeight="25.0" prefWidth="74.0" />
+            <Spinner fx:id="fromSpinner" editable="true" layoutX="63.0" layoutY="663.0" prefHeight="25.0" prefWidth="74.0" />
+            <Text layoutX="63.0" layoutY="647.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Od:" wrappingWidth="31.71484375" />
+            <Text layoutX="156.0" layoutY="647.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Do:" wrappingWidth="31.71484375" />
+            <Text layoutX="257.0" layoutY="647.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Częstotliwość próbkowania: " wrappingWidth="193.6015625" />
+            <Spinner fx:id="frequencySpinner" editable="true" layoutX="258.0" layoutY="663.0" prefHeight="25.0" prefWidth="152.0" />
+            <Button fx:id="drawButton" layoutX="502.0" layoutY="663.0" mnemonicParsing="false" onMouseClicked="#drawChart" prefHeight="25.0" prefWidth="185.0" text="Draw" />
+         </children>
+      </Pane>
+   </children>
+</GridPane>
