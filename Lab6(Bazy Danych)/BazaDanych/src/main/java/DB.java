@@ -10,7 +10,7 @@ public class DB{
         int attemptsNumber =0;
         while(attemptsNumber<3)
         try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
             conn =
                     DriverManager.getConnection("jdbc:mysql://mysql.agh.edu.pl/mgujda",
                             "mgujda","eaN4Veh2Qdn8adLc");
